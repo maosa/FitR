@@ -6,16 +6,16 @@
 
 ## **Contents:**
 * Directories:
-    - *calendar*
+    * *calendar*
         * *.ics* files for synchronising the planned workouts with iCalendar
-    - *backups*
+    * *backups*
         * *.csv* files with backups of the data
-    - *other*
+    * *other*
         * app scripts and those of previous app versions
 * Files:
-    - *.csv* files containing the data utilised by the app
-    - *deploy_fitr.R*
-        * a script to deploy the script onto https://www.shinyapps.io/
+    * *.csv* files containing the data utilised by the app
+    * *deploy_fitr.R*
+        * a script to deploy the app onto https://www.shinyapps.io/
 
 <br/>
 <hr/>
