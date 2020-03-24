@@ -3,6 +3,7 @@
 ## **Overview:**
 * A web application for planning and tracking my workouts
 * This was built using the R Shiny framework
+* The app is deployed at https://maosa.shinyapps.io/fitr/
 
 ## **Contents:**
 * Directories:
