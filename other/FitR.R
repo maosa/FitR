@@ -30,46 +30,46 @@ suppressMessages(library(timevis))
 
 ##### check if required directories/files exist and if not, create them
 
-if (!dir.exists(paste0("~", "/FitR"))) {
-  dir.create(paste0("~", "/FitR"))
+if (!dir.exists(paste0("~", "/fitr"))) {
+  dir.create(paste0("~", "/fitr"))
 }
 
-if (!dir.exists(paste0("~", "/FitR/calendar"))) {
-  dir.create(paste0("~", "/FitR/calendar"))
+if (!dir.exists(paste0("~", "/fitr/calendar"))) {
+  dir.create(paste0("~", "/fitr/calendar"))
 }
 
-if (!dir.exists(paste0("~", "/FitR/backups"))) {
-  dir.create(paste0("~", "/FitR/backups"))
+if (!dir.exists(paste0("~", "/fitr/backups"))) {
+  dir.create(paste0("~", "/fitr/backups"))
 }
 
-if (!file.exists(paste0("~", "/FitR/data.csv")) & 
-    !file.exists(paste0("~", "/FitR/run.csv")) &
-    !file.exists(paste0("~", "/FitR/plan.csv")) &
-    !file.exists(paste0("~", "/FitR/calendar.csv"))) {
+if (!file.exists(paste0("~", "/fitr/data.csv")) & 
+    !file.exists(paste0("~", "/fitr/run.csv")) &
+    !file.exists(paste0("~", "/fitr/plan.csv")) &
+    !file.exists(paste0("~", "/fitr/calendar.csv"))) {
   ##### create csv files
   write.table(data.frame("No", "Date", "Workout", "Duration"),
-              file = paste0("~", "/FitR/data.csv"),
+              file = paste0("~", "/fitr/data.csv"),
               row.names = FALSE,
               col.names = FALSE,
               sep = ",",
               quote = FALSE)
   
   write.table(data.frame("No", "Date", "Distance", "Duration", "Pace"),
-              file = paste0("~", "/FitR/run.csv"),
+              file = paste0("~", "/fitr/run.csv"),
               row.names = FALSE,
               col.names = FALSE,
               sep = ",",
               quote = FALSE)
   
   write.table(data.frame("id", "content", "start"),
-              file = paste0("~", "/FitR/plan.csv"),
+              file = paste0("~", "/fitr/plan.csv"),
               row.names = FALSE,
               col.names = FALSE,
               sep = ",",
               quote = FALSE)
   
   write.table(data.frame("starttime", "summary"),
-              file = paste0("~", "/FitR/calendar/calendar.csv"),
+              file = paste0("~", "/fitr/calendar/calendar.csv"),
               row.names = FALSE,
               col.names = FALSE,
               sep = ",",
@@ -78,28 +78,28 @@ if (!file.exists(paste0("~", "/FitR/data.csv")) &
 
 ##### create required .ics files
 
-if (!file.exists(paste0("~", "/FitR/calendar/template_header.ics")) & 
-    !file.exists(paste0("~", "/FitR/calendar/template_body.ics")) &
-    !file.exists(paste0("~", "/FitR/calendar/template_footer.ics"))) {
+if (!file.exists(paste0("~", "/fitr/calendar/template_header.ics")) & 
+    !file.exists(paste0("~", "/fitr/calendar/template_body.ics")) &
+    !file.exists(paste0("~", "/fitr/calendar/template_footer.ics"))) {
   
   cat("BEGIN:VCALENDAR\nVERSION:2.0\nCALSCALE:GREGORIAN",
-      file = paste0("~", "/FitR/calendar/template_header.ics"))
+      file = paste0("~", "/fitr/calendar/template_header.ics"))
   cat("BEGIN:VEVENT\nDTSTART:20060912T060000Z\nUID:461092315540@example.com\nSUMMARY:new2\nEND:VEVENT\n",
-      file = paste0("~", "/FitR/calendar/template_body.ics"))
+      file = paste0("~", "/fitr/calendar/template_body.ics"))
   cat("END:VCALENDAR",
-      file = paste0("~", "/FitR/calendar/template_footer.ics"))
+      file = paste0("~", "/fitr/calendar/template_footer.ics"))
   
 }
 
-setwd(paste0("~", "/FitR"))
+setwd(paste0("~", "/fitr"))
 
-path <- paste0("~", "/FitR/data.csv")
+path <- paste0("~", "/fitr/data.csv")
 
-run <- paste0("~", "/FitR/run.csv")
+run <- paste0("~", "/fitr/run.csv")
 
-plan <- paste0("~", "/FitR/plan.csv")
+plan <- paste0("~", "/fitr/plan.csv")
 
-calendar <- paste0("~", "/FitR/calendar/calendar.csv")
+calendar <- paste0("~", "/fitr/calendar/calendar.csv")
 
 workouts <- c("Chest", "Back", "Legs", "Compound", "Running", "Rest", "Other")
 
@@ -433,10 +433,10 @@ server <- function(input, output, session) {
   observeEvent(input$backup, {
     
     withProgress(message = "Backing up data...", {
-      system("cp ~/FitR/data.csv ~/FitR/backups/data_backup.csv")
-      system("cp ~/FitR/run.csv ~/FitR/backups/run_backup.csv")
-      system("cp ~/FitR/plan.csv ~/FitR/backups/plan_backup.csv")
-      system("cp ~/FitR/calendar/calendar.csv ~/FitR/backups/calendar_backup.csv")
+      system("cp ~/fitr/data.csv ~/fitr/backups/data_backup.csv")
+      system("cp ~/fitr/run.csv ~/fitr/backups/run_backup.csv")
+      system("cp ~/fitr/plan.csv ~/fitr/backups/plan_backup.csv")
+      system("cp ~/fitr/calendar/calendar.csv ~/fitr/backups/calendar_backup.csv")
     }) # withProgress
     
   })
@@ -560,13 +560,13 @@ server <- function(input, output, session) {
       row.names = FALSE,
       quote = FALSE)
     
-    df <- read.csv(paste0("~", "/FitR/calendar/calendar.csv"),
+    df <- read.csv(paste0("~", "/fitr/calendar/calendar.csv"),
                    sep = "\t",
                    stringsAsFactors = FALSE)
     
-    ics_header <- readLines(paste0("~", "/FitR/calendar/template_header.ics"), warn = FALSE)
-    ics_body <- readLines(paste0("~", "/FitR/calendar/template_body.ics"), warn = FALSE)
-    ics_footer <- readLines(paste0("~", "/FitR/calendar/template_footer.ics"), warn = FALSE)
+    ics_header <- readLines(paste0("~", "/fitr/calendar/template_header.ics"), warn = FALSE)
+    ics_body <- readLines(paste0("~", "/fitr/calendar/template_body.ics"), warn = FALSE)
+    ics_footer <- readLines(paste0("~", "/fitr/calendar/template_footer.ics"), warn = FALSE)
     ics_events <- ""
     
     for(i in 1:nrow(df)) {
@@ -581,9 +581,9 @@ server <- function(input, output, session) {
     ics_events <- append(ics_header, ics_events)
     ics_events <- append(ics_events, ics_footer)
     
-    write(ics_events, file = paste0("~", "/FitR/calendar/Workouts.ics"))
+    write(ics_events, file = paste0("~", "/fitr/calendar/Workouts.ics"))
     
-    system("open ~/FitR/calendar/Workouts.ics")
+    system("open ~/fitr/calendar/Workouts.ics")
   })
   
   
