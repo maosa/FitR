@@ -91,7 +91,7 @@ if (!file.exists(paste0(Sys.getenv("HOME"), "/fitr/calendar/template_header.ics"
   
 }
 
-setwd(paste0(Sys.getenv("HOME"), "/fitr"))
+# setwd(paste0(Sys.getenv("HOME"), "/fitr"))
 
 path <- "data.csv"
 

@@ -5,6 +5,6 @@ account: maosa
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 2049660
-bundleId: 2963707
+bundleId: 2963777
 url: https://maosa.shinyapps.io/fitr/
-when: 1585909504.17894
+when: 1585910881.76847
