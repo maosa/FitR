@@ -16,8 +16,6 @@ echo -e 'Deploying app...\n'
 
 Rscript /Users/maosa/fitr/deploy_fitr.R
 
-echo -e 'FitR deployed!\n'
-
-echo -e 'Backing up data...\n'
+echo -e '\nFitR deployed!\n'
 
 echo -e 'Done!\n'

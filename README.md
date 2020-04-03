@@ -13,10 +13,10 @@
         * *.csv* files with backups of the data
 * Files:
     * *.csv* files containing the data utilised by the app
-    * *deploy_fitr.R*
-        * a script to deploy the app to https://www.shinyapps.io/
     * *sync.command*
-        * a script to backup the app data and files and deploy the app to https://www.shinyapps.io/
+        * a script to backup the app data and files and deploy the app
+    * *deploy_fitr.R*
+        * a script to deploy the app
 
 <br/>
 <hr/>
