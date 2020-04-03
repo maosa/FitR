@@ -30,46 +30,46 @@ suppressMessages(library(timevis))
 
 ##### check if required directories/files exist and if not, create them
 
-if (!dir.exists(paste0("~", "/fitr"))) {
-  dir.create(paste0("~", "/fitr"))
+if (!dir.exists(paste0(Sys.getenv("HOME"), "/fitr"))) {
+  dir.create(paste0(Sys.getenv("HOME"), "/fitr"))
 }
 
-if (!dir.exists(paste0("~", "/fitr/calendar"))) {
-  dir.create(paste0("~", "/fitr/calendar"))
+if (!dir.exists(paste0(Sys.getenv("HOME"), "/fitr/calendar"))) {
+  dir.create(paste0(Sys.getenv("HOME"), "/fitr/calendar"))
 }
 
-if (!dir.exists(paste0("~", "/fitr/backups"))) {
-  dir.create(paste0("~", "/fitr/backups"))
+if (!dir.exists(paste0(Sys.getenv("HOME"), "/fitr/backups"))) {
+  dir.create(paste0(Sys.getenv("HOME"), "/fitr/backups"))
 }
 
-if (!file.exists(paste0("~", "/fitr/data.csv")) & 
-    !file.exists(paste0("~", "/fitr/run.csv")) &
-    !file.exists(paste0("~", "/fitr/plan.csv")) &
-    !file.exists(paste0("~", "/fitr/calendar/calendar.csv"))) {
+if (!file.exists(paste0(Sys.getenv("HOME"), "/fitr/data.csv")) & 
+    !file.exists(paste0(Sys.getenv("HOME"), "/fitr/run.csv")) &
+    !file.exists(paste0(Sys.getenv("HOME"), "/fitr/plan.csv")) &
+    !file.exists(paste0(Sys.getenv("HOME"), "/fitr/calendar/calendar.csv"))) {
   ##### create csv files
   write.table(data.frame("No", "Date", "Workout", "Duration"),
-              file = paste0("~", "/fitr/data.csv"),
+              file = paste0(Sys.getenv("HOME"), "/fitr/data.csv"),
               row.names = FALSE,
               col.names = FALSE,
               sep = ",",
               quote = FALSE)
   
   write.table(data.frame("No", "Date", "Distance", "Duration", "Pace"),
-              file = paste0("~", "/fitr/run.csv"),
+              file = paste0(Sys.getenv("HOME"), "/fitr/run.csv"),
               row.names = FALSE,
               col.names = FALSE,
               sep = ",",
               quote = FALSE)
   
   write.table(data.frame("id", "content", "start"),
-              file = paste0("~", "/fitr/plan.csv"),
+              file = paste0(Sys.getenv("HOME"), "/fitr/plan.csv"),
               row.names = FALSE,
               col.names = FALSE,
               sep = ",",
               quote = FALSE)
   
   write.table(data.frame("starttime", "summary"),
-              file = paste0("~", "/fitr/calendar/calendar.csv"),
+              file = paste0(Sys.getenv("HOME"), "/fitr/calendar/calendar.csv"),
               row.names = FALSE,
               col.names = FALSE,
               sep = ",",
@@ -78,28 +78,28 @@ if (!file.exists(paste0("~", "/fitr/data.csv")) &
 
 ##### create required .ics files
 
-if (!file.exists(paste0("~", "/fitr/calendar/template_header.ics")) & 
-    !file.exists(paste0("~", "/fitr/calendar/template_body.ics")) &
-    !file.exists(paste0("~", "/fitr/calendar/template_footer.ics"))) {
+if (!file.exists(paste0(Sys.getenv("HOME"), "/fitr/calendar/template_header.ics")) & 
+    !file.exists(paste0(Sys.getenv("HOME"), "/fitr/calendar/template_body.ics")) &
+    !file.exists(paste0(Sys.getenv("HOME"), "/fitr/calendar/template_footer.ics"))) {
   
   cat("BEGIN:VCALENDAR\nVERSION:2.0\nCALSCALE:GREGORIAN",
-      file = paste0("~", "/fitr/calendar/template_header.ics"))
+      file = paste0(Sys.getenv("HOME"), "/fitr/calendar/template_header.ics"))
   cat("BEGIN:VEVENT\nDTSTART:20060912T060000Z\nUID:461092315540@example.com\nSUMMARY:new2\nEND:VEVENT\n",
-      file = paste0("~", "/fitr/calendar/template_body.ics"))
+      file = paste0(Sys.getenv("HOME"), "/fitr/calendar/template_body.ics"))
   cat("END:VCALENDAR",
-      file = paste0("~", "/fitr/calendar/template_footer.ics"))
+      file = paste0(Sys.getenv("HOME"), "/fitr/calendar/template_footer.ics"))
   
 }
 
-setwd(paste0("~", "/fitr"))
+setwd(paste0(Sys.getenv("HOME"), "/fitr"))
 
-path <- paste0("~", "/fitr/data.csv")
+path <- "data.csv"
 
-run <- paste0("~", "/fitr/run.csv")
+run <- "run.csv"
 
-plan <- paste0("~", "/fitr/plan.csv")
+plan <- "plan.csv"
 
-calendar <- paste0("~", "/fitr/calendar/calendar.csv")
+calendar <- "calendar/calendar.csv"
 
 workouts <- c("Chest", "Back", "Legs", "Compound", "Running", "Rest", "Other")
 
@@ -433,10 +433,10 @@ server <- function(input, output, session) {
   observeEvent(input$backup, {
     
     withProgress(message = "Backing up data...", {
-      system("cp ~/fitr/data.csv ~/fitr/backups/data_backup.csv")
-      system("cp ~/fitr/run.csv ~/fitr/backups/run_backup.csv")
-      system("cp ~/fitr/plan.csv ~/fitr/backups/plan_backup.csv")
-      system("cp ~/fitr/calendar/calendar.csv ~/fitr/backups/calendar_backup.csv")
+      system(paste0('cp ', Sys.getenv("HOME"), '/fitr/data.csv ', Sys.getenv("HOME"), '/fitr/backups/data_backup.csv'))
+      system(paste0('cp ', Sys.getenv("HOME"), '/fitr/run.csv ', Sys.getenv("HOME"), '/fitr/backups/run_backup.csv'))
+      system(paste0('cp ', Sys.getenv("HOME"), '/fitr/plan.csv ', Sys.getenv("HOME"), '/fitr/backups/plan_backup.csv'))
+      system(paste0('cp ', Sys.getenv("HOME"), '/fitr/calendar/calendar.csv ', Sys.getenv("HOME"), '/fitr/backups/calendar_backup.csv'))
     }) # withProgress
     
   })
@@ -560,13 +560,13 @@ server <- function(input, output, session) {
       row.names = FALSE,
       quote = FALSE)
     
-    df <- read.csv(paste0("~", "/fitr/calendar/calendar.csv"),
+    df <- read.csv(paste0(Sys.getenv("HOME"), "/fitr/calendar/calendar.csv"),
                    sep = "\t",
                    stringsAsFactors = FALSE)
     
-    ics_header <- readLines(paste0("~", "/fitr/calendar/template_header.ics"), warn = FALSE)
-    ics_body <- readLines(paste0("~", "/fitr/calendar/template_body.ics"), warn = FALSE)
-    ics_footer <- readLines(paste0("~", "/fitr/calendar/template_footer.ics"), warn = FALSE)
+    ics_header <- readLines(paste0(Sys.getenv("HOME"), "/fitr/calendar/template_header.ics"), warn = FALSE)
+    ics_body <- readLines(paste0(Sys.getenv("HOME"), "/fitr/calendar/template_body.ics"), warn = FALSE)
+    ics_footer <- readLines(paste0(Sys.getenv("HOME"), "/fitr/calendar/template_footer.ics"), warn = FALSE)
     ics_events <- ""
     
     for(i in 1:nrow(df)) {
@@ -581,9 +581,9 @@ server <- function(input, output, session) {
     ics_events <- append(ics_header, ics_events)
     ics_events <- append(ics_events, ics_footer)
     
-    write(ics_events, file = paste0("~", "/fitr/calendar/Workouts.ics"))
+    write(ics_events, file = paste0(Sys.getenv("HOME"), "/fitr/calendar/workouts.ics"))
     
-    system("open ~/fitr/calendar/Workouts.ics")
+    system("open ~/fitr/calendar/workouts.ics")
   })
   
   
@@ -747,11 +747,10 @@ server <- function(input, output, session) {
                   #   c("indianred", "navy", "gold", "lavender",
                   #     "mediumturquoise", "black", "mistyrose")),
                   backgroundColor = styleEqual(
-                    c(unique(grep("Chest",fread(path)$Workout, value = TRUE)),
+                    c(
+                      unique(grep("Chest",fread(path)$Workout, value = TRUE)),
                       unique(grep("Back",fread(path)$Workout, value = TRUE)),
-                      unique(grep("Pull",fread(path)$Workout, value = TRUE)),
                       unique(grep("Legs",fread(path)$Workout, value = TRUE)),
-                      unique(grep("Texas",fread(path)$Workout, value = TRUE)),
                       "Compound",
                       "Running",
                       "Rest",
@@ -759,20 +758,21 @@ server <- function(input, output, session) {
                       unique(grep("Multisport",fread(path)$Workout, value = TRUE)),
                       unique(grep("Shoulders",fread(path)$Workout, value = TRUE)),
                       "Other",
-                      "Bouldering"),
-                    c(replicate(19, "indianred"),
-                      replicate(16, "navy"),
-                      replicate(5, "navy"),
-                      replicate(3, "gold"),
-                      replicate(3, "lavender"),
-                      "lavender",
-                      "mediumturquoise",
-                      "black",
-                      replicate(7, "mediumturquoise"),
-                      replicate(4, "mistyrose"),
-                      "mistyrose",
-                      "mistyrose",
-                      "mistyrose")
+                      "Bouldering"
+                    ),
+                    c(
+                      "indianred", # chest
+                      "navy", # back
+                      replicate(2, "gold"), # legs
+                      "lavender", # compound
+                      "mediumturquoise", # running
+                      "black", # rest
+                      "mediumturquoise", # cardio
+                      "mistyrose", # multisport
+                      "mistyrose", # shoulders
+                      "mistyrose", # other
+                      "mistyrose" # bouldering
+                    )
                     ) #styleEqual
                   ) #formatStyle
   }) # renderDT
