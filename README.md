@@ -11,12 +11,12 @@
         * *.ics* files for synchronising the planned workouts with iCalendar
     * *backups*
         * *.csv* files with backups of the data
-    * *other*
-        * app scripts and those of previous app versions
 * Files:
     * *.csv* files containing the data utilised by the app
     * *deploy_fitr.R*
-        * a script to deploy the app onto https://www.shinyapps.io/
+        * a script to deploy the app to https://www.shinyapps.io/
+    * *sync.command*
+        * a script to backup the app data and files and deploy the app to https://www.shinyapps.io/
 
 <br/>
 <hr/>

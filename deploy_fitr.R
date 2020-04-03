@@ -1,2 +1,2 @@
 library(rsconnect)
-rsconnect::deployApp(appDir = "/Users/maosa/my_files/fitr")
+rsconnect::deployApp(appDir = paste0(Sys.getenv("HOME"), "/fitr"))
